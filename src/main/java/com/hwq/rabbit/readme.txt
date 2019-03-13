@@ -83,3 +83,35 @@ Fanout Exchange:
 Headers:
 交换机基于包括headers和可选值的参数来做路由。Headers交换机和Topic交换机非常像，但是它是基于header的值而不是路由键来做路由的。一条消息被认为是匹配的，如果它header的值与绑定中指定的值相同的话。
 一个叫做”x-match“的特殊的参数说明是否所有的header都必须匹配或者只需要有一个， 它有两种值， 默认为"all"，表示所有的header键值对都必须匹配；而"any"表示至少一个header键值对需要匹配。Headers可以被int或者string组成。
+
+RabbitMQ 之消息确认机制(事务+Confirm)
+在 Rabbitmq 中我们可以通过持久化来解决因为服务器异常而导致丢失的问题,
+除此之外我们还会遇到一个问题:生产者将消息发送出去之后,消息到底有没有正确到达 Rabbit 服务器呢?如果不错
+得数处理,我们是不知道的,(即 Rabbit 服务器不会反馈任何消息给生产者),也就是默认的情况下是不知道消息有没有正确到达;
+导致的问题:消息到达服务器之前丢失,那么持久化也不能解决此问题,因为消息根本就没有到达 Rabbit 服务器!
+RabbitMQ 为我们提供了两种方式:
+1. 通过 AMQP 事务机制实现，这也是 AMQP 协议层面提供的解决方案；
+2. 通过将 channel 设置成 confirm 模式来实现；
+
+Confirm发送方确认模式
+Confirm发送方确认模式使用和事务类似，也是通过设置Channel进行发送方确认的。
+
+AMQP：
+channel.txSelect()声明启动事务模式；
+
+channel.txComment()提交事务；
+
+channel.txRollback()回滚事务；
+
+Confirm的三种实现方式：
+
+方式一：channel.waitForConfirms()普通发送方确认模式；
+
+方式二：channel.waitForConfirmsOrDie()批量确认模式；
+
+方式三：channel.addConfirmListener()异步监听发送方确认模式；
+Channel 对象提供的 ConfirmListener()回调方法只包含 deliveryTag（当前 Chanel 发出的消息序号），我们需要自己为
+每一个 Channel 维护一个 unconfirm 的消息序号集合，每 publish 一条数据，集合中元素加 1，每回调一次 handleAck
+方法，unconfirm 集合删掉相应的一条（multiple=false）或多条（multiple=true）记录。从程序运行效率上看，这个
+unconfirm 集合最好采用有序集合 SortedSet 存储结构。实际上，SDK 中的 waitForConfirms()方法也是通过 SortedSet
+维护消息序号的
