@@ -6,7 +6,7 @@ import com.rabbitmq.client.*;
 import java.io.IOException;
 
 public class Consumer {
-//    private static final String QUEUE_NAME = "QUEUE_simple";
+    //    private static final String QUEUE_NAME = "QUEUE_simple";
     private static final String QUEUE_NAME = "QUEUE_simple_confirm_aync";
 
     public static void main(String[] args) throws Exception {

@@ -28,7 +28,7 @@ public class Recv1 {
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body,"utf-8");
+                String message = new String(body, "utf-8");
                 System.out.println(" [1] Received '" + message + "'");
                 try {
                     Thread.sleep(1000);

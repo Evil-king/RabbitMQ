@@ -26,9 +26,9 @@ public class SendConfirm {
 
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
 
-        if(!channel.waitForConfirms()){
+        if (!channel.waitForConfirms()) {
             System.out.println("send message failed.");
-        }else{
+        } else {
             System.out.println(" send messgae ok ...");
         }
         channel.close();

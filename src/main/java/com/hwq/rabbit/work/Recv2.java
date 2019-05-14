@@ -6,7 +6,7 @@ import com.rabbitmq.client.*;
 import java.io.IOException;
 
 /**
- *  Round-robin（轮询分发）
+ * Round-robin（轮询分发）
  */
 public class Recv2 {
     private static final String QUEUE_NAME = "test_queue_work";
@@ -23,7 +23,7 @@ public class Recv2 {
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body,"utf-8");
+                String message = new String(body, "utf-8");
                 System.out.println(" [2] Received '" + message + "'");
                 try {
                     Thread.sleep(1000);

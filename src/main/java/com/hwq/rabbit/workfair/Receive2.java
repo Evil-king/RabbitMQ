@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 public class Receive2 {
     private final static String QUEUE_NAME = "test_queue_work_fair";
+
     public static void main(String[] args) throws Exception {
         // 获取到连接以及mq通道
         Connection connection = ConnectionUtils.getConnection();

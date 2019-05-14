@@ -6,7 +6,7 @@ import com.rabbitmq.client.Connection;
 
 /**
  * Fair dispatch（公平分发）
- *
+ * <p>
  * 我们使用 basicQos( prefetchCount = 1)方法，来限制 RabbitMQ 只发不超过 1 条的消息给同
  * 一个消费者。当消息处理完毕后，有了反馈 ack，才会进行第二次发送。(也就是说需要手动反馈给 Rabbitmq )
  */

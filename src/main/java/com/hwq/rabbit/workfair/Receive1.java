@@ -19,9 +19,9 @@ public class Receive1 {
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         channel.basicQos(1);//保证一次只分发一个
         //定义一个消息的消费者
-            Consumer consumer = new DefaultConsumer(channel) {
-                @Override
-                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 System.out.println(" [1] Received '" + message + "'");
                 try {

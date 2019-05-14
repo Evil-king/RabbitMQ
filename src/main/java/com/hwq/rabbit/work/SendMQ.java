@@ -5,7 +5,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
 /**
- *  Round-robin（轮询分发）
+ * Round-robin（轮询分发）
  */
 public class SendMQ {
 
@@ -22,7 +22,7 @@ public class SendMQ {
         for (int i = 0; i < 50; i++) {
             //发消息
             String msg = "." + i;
-            channel.basicPublish("",QUEUE_NAME,null,msg.getBytes());
+            channel.basicPublish("", QUEUE_NAME, null, msg.getBytes());
             System.out.println("--------Send ms:" + msg);
         }
         channel.close();

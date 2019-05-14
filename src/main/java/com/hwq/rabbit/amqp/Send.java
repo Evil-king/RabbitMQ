@@ -26,10 +26,10 @@ public class Send {
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             int result = 1 / 0;
             channel.txCommit();
-        } catch (Exception e){
+        } catch (Exception e) {
             channel.txRollback();
             System.out.println("-----msg rollBack");
-        }finally {
+        } finally {
             System.out.println("---------send msg over:" + message);
         }
         channel.close();

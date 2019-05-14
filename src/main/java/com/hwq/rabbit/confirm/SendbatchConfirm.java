@@ -23,14 +23,14 @@ public class SendbatchConfirm {
         channel.confirmSelect();
 
         String message = "Hello simple";
-        for(int i = 0; i< 50; i++){
+        for (int i = 0; i < 50; i++) {
 
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
         }
 
-        if(!channel.waitForConfirms()){
+        if (!channel.waitForConfirms()) {
             System.out.println("send message failed.");
-        }else{
+        } else {
             System.out.println(" send messgae ok ...");
         }
         channel.close();
